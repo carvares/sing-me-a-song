@@ -1,7 +1,7 @@
-import { response } from "express";
 import { connection } from "../database";
+import { RecModel } from "../interfaces/interfaces";
 
-async function insertRec(music: { name: string, youtubeLink: string }) {
+async function insertRec(music: RecModel) {
     try {
         await connection.query(`
         INSERT INTO songs 

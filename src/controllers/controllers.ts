@@ -1,6 +1,7 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { schema } from "../schema/musicSchema";
 import { insertRec, scorePlus, scoreMinus, lowScoreSong, highScoreSong, getTopSongs } from "../repositories/repository"
+
 
 async function newRec(req: Request, res: Response) {
     try {
