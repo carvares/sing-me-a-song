@@ -23,14 +23,14 @@ async function vote(req: Request, res: Response) {
     try {
         if (req.route.path === "/recommendations/:id/upvote") {
             const response = await scorePlus(parseInt(req.params.id))
-            if (response.rows.length === 0) res.sendStatus(404)
+            if (response.length === 0) res.sendStatus(404)
             else {
                 res.sendStatus(200)
             }
         }
         if (req.route.path === "/recommendations/:id/downvote") {
             const response = await scoreMinus(parseInt(req.params.id))
-            if (response.rows.length === 0) res.sendStatus(404)
+            if (response.length === 0) res.sendStatus(404)
             else {
                 res.sendStatus(200)
             }

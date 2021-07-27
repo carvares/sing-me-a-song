@@ -12,7 +12,7 @@ async function insertRec(music: RecModel) {
         console.log(e)
     }
 }
-async function scorePlus(id: number) {
+async function scorePlus(id: number):Promise<RecModel[]> {
     try {
 
         const response = await connection.query(`
@@ -21,13 +21,12 @@ async function scorePlus(id: number) {
         WHERE "id" = $1
         RETURNING *
         `, [id])
-        return response
+        return response.rows
     } catch (e) {
         console.log(e)
     }
-
 }
-async function scoreMinus(id: number) {
+async function scoreMinus(id: number):Promise<RecModel[]> {
     try {
         const response = await connection.query(`
         UPDATE songs 
@@ -37,7 +36,7 @@ async function scoreMinus(id: number) {
         `, [id])
 
         if (response.rows.length === 0) {
-            return response
+            return response.rows
         } else {
             if (response.rows[0].score === -6) {
                 await connection.query(`
@@ -45,16 +44,14 @@ async function scoreMinus(id: number) {
                 WHERE id = $1
                 `, [response.rows[0].id])
             }
-            return response
+            return response.rows
         }
-
-
     } catch (e) {
         console.log(e)
     }
 
 }
-async function lowScoreSong() {
+async function lowScoreSong():Promise<RecModel[]> {
     try {
         const response = await connection.query(`
     SELECT *
@@ -67,9 +64,8 @@ async function lowScoreSong() {
     } catch (e) {
         console.log(e)
     };
-
 }
-async function highScoreSong() {
+async function highScoreSong():Promise<RecModel[]> {
     try {
         const response = await connection.query(`
     SELECT *
@@ -82,7 +78,7 @@ async function highScoreSong() {
         console.log(e)
     }
 }
-async function getTopSongs(amount: number) {
+async function getTopSongs(amount: number):Promise<RecModel[]> {
     try {
         const response = await connection.query(`
         SELECT *
